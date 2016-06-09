@@ -21,17 +21,23 @@ class HomeController extends Controller
     public function addTask(Request $request){
     	#dd($request->name);
     	$task = new Task;
+    	
     	$task->name = $request->name;
     	$task->save();
-    	$tasks = Task::all();
-    	return view("tasks",compact('tasks'));
+        $details = [];
+        $details['id'] = $task->id;
+        $details['name'] = $task->name;
+        $details['token'] = csrf_token();
+    	#$tasks = Task::all();
+    	// return view("tasks",compact('tasks'));
+    	return $details;
     }
     
     public function delete_task(Request $request){
     	#dd($request->id);
     	$task = Task::find($request->id);
     	$task->delete();
-    	$tasks = Task::all();
-    	return view("tasks",compact('tasks'));
+    	#$tasks = Task::all();
+    	return "Success";
     }
 }
